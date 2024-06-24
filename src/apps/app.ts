@@ -4,6 +4,7 @@ import agentsApp from './agents/app';
 import AppConfig from './AppConfig';
 import statementsApp from './statements/app';
 import statesApp from './states/app';
+import { StatusCodes } from 'http-status-codes';
 
 export default (appConfig: AppConfig): Router => {
   const router = Router();
@@ -90,6 +91,7 @@ export default (appConfig: AppConfig): Router => {
   });
 
   const xAPIPrefix = appConfig.presenter.express.xAPIPrefix;
+  router.use('/health', (_req, res) => res.status(StatusCodes.OK).send("OK"));
   router.use(`${xAPIPrefix}/xAPI/activities/profile`, activitiesRouter);
   router.use(`${xAPIPrefix}/xAPI/activities/state`, statesRouter);
   router.use(`${xAPIPrefix}/xAPI/agents`, agentsRouter);
